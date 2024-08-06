@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\DTOs\UserDTO;
 use App\Http\Requests\User\UserCreateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Responses\Response;
@@ -32,7 +33,8 @@ class UserController extends Controller
      */
     public function store(UserCreateRequest $request): JsonResponse
     {
-        $user = User::create($request->all());
+        $userDTO = UserDTO::fromRequest($request);
+        $user = User::create($userDTO->toArray());
         return Response::success($user, 201);
     }
 
@@ -41,7 +43,8 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user): JsonResponse
     {
-        $user->update($request->all());
+        $userDTO = UserDTO::fromRequest($request);
+        $user->update($userDTO->toArray());
         return Response::success($user);
     }
     
