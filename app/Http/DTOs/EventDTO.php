@@ -12,6 +12,7 @@ class EventDTO extends BaseDTO
   public float $price;
   public int $attendee_limit;
   public ?string $status;
+  public string $user_id;
 
   public function __construct(array $data)
   {

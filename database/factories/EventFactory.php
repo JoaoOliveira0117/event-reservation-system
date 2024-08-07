@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\EventStatus;
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EventFactory extends Factory
 {
+
     /**
      * Define the model's default state.
      *
@@ -23,8 +25,8 @@ class EventFactory extends Factory
             'deadline' => $this->faker->date(),
             'date' => $this->faker->dateTime(),
             'location' => $this->faker->address(),
-            'price' => $this->faker->randomFloat(2,0,0),
-            'attendee_limit' => $this->faker->randomDigitNotZero(),
+            'price' => $this->faker->randomFloat(2,0,99),
+            'attendee_limit' => $this->faker->randomNumber(2),
             'status' => $this->faker->randomElement(array_map(fn($case) => $case->value, EventStatus::cases()))
         ];
     }

@@ -33,6 +33,7 @@ class UserController extends Controller
      */
     public function store(UserCreateRequest $request): JsonResponse
     {
+        // Same functionality as AuthController::register;
         $userDTO = UserDTO::fromRequest($request);
         $user = User::create($userDTO->toArray());
         return Response::success($user, 201);

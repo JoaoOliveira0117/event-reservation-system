@@ -24,7 +24,7 @@ class EventCreateRequest extends ValidatedRequest
         'location' => 'required|string|max:255',
         'price' => 'required|numeric|min:0',
         'attendee_limit' => 'nullable|integer|min:1',
-        'status' => 'nullable|in:' . implode(",", $eventStatus),
+        'status' => 'nullable|in:' . implode(",", $eventStatus)
     ];
   }
 }

@@ -33,6 +33,7 @@ class EventController extends Controller
     public function store(EventCreateRequest $request): JsonResponse
     {
         $eventDTO = EventDTO::fromRequest($request);
+        $eventDTO->user_id = $request->user()->id;
         $event = Event::create($eventDTO->toArray());
         return Response::success($event, 201);
     }
@@ -54,5 +55,11 @@ class EventController extends Controller
     {
         $event->delete();
         return Response::success(null, 204);
+    }
+
+    public function getMyEvents(): JsonResponse
+    {
+        $events = Event::where('user_id', request()->user()->id)->get();
+        return Response::success($events);
     }
 }
