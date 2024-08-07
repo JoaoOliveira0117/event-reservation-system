@@ -31,12 +31,12 @@ class User extends Authenticable
         );
     }
 
-    public function createdEvents(): HasMany
+    public function events(): HasMany
     {
         return $this->hasMany(Event::class);
     }
 
-    public function events(): BelongsToMany
+    public function tickets(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, Ticket::class);
     }

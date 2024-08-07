@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\DTOs\UserDTO;
 use App\Http\Requests\User\UserCreateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Responses\Response;
+use App\Http\Services\UserService;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -16,7 +17,7 @@ class UserController extends Controller
      */
     public function index(): JsonResponse
     {
-        $users = User::all();
+        $users = UserService::getAll();
         return Response::success($users);
     }
 
@@ -32,10 +33,8 @@ class UserController extends Controller
      * Creates a user and saves it to the database
      */
     public function store(UserCreateRequest $request): JsonResponse
-    {
-        // Same functionality as AuthController::register;
-        $userDTO = UserDTO::fromRequest($request);
-        $user = User::create($userDTO->toArray());
+    {   
+        $user = UserService::create($request);
         return Response::success($user, 201);
     }
 
@@ -44,8 +43,11 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user): JsonResponse
     {
-        $userDTO = UserDTO::fromRequest($request);
-        $user->update($userDTO->toArray());
+        if (!Gate::allows('manage-user', $user)) {
+            return Response::error((object) ['error' => 'Unauthorized.'], 403);
+        }
+
+        UserService::update($user, $request);
         return Response::success($user);
     }
     
@@ -54,7 +56,8 @@ class UserController extends Controller
      */
     public function destroy(User $user): JsonResponse
     {
-        $user->delete();
-        return Response::success(null, 204);
+
+        UserService::delete($user);
+        return Response::success((object) null, 204);
     }
 }

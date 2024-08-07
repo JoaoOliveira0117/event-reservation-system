@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\DTOs\EventDTO;
 use App\Http\Requests\Event\EventCreateRequest;
 use App\Http\Requests\Event\EventGetMyEventsRequest;
 use App\Http\Requests\Event\EventUpdateRequest;
 use App\Http\Responses\Response;
+use App\Http\Services\EventService;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
 {
     public function index(): JsonResponse
     {
-        $events = Event::all();
+        $events = EventService::getAll();
         return Response::success($events);
     }
 
@@ -31,8 +32,7 @@ class EventController extends Controller
      */
     public function store(EventCreateRequest $request): JsonResponse
     {
-        $eventDTO = EventDTO::arrayFromRequest($request);
-        $event = Event::create($eventDTO);
+        $event = EventService::create($request);
         return Response::success($event, 201);
     }
 
@@ -41,8 +41,11 @@ class EventController extends Controller
      */
     public function update(Event $event, EventUpdateRequest $request): JsonResponse
     {
-        $eventDTO = EventDTO::arrayFromRequest($request);
-        $event->update($eventDTO);
+        if (!Gate::allows('manage-event', $event)) {
+            return Response::error((object) ['error' => 'Unauthorized.'], 403);
+        }
+        
+        EventService::update($event, $request);
         return Response::success($event);
     }
     
@@ -51,7 +54,11 @@ class EventController extends Controller
      */
     public function destroy(Event $event): JsonResponse
     {
-        $event->delete();
+        if (!Gate::allows('manage-event', $event)) {
+            return Response::error((object) ['error' => 'Unauthorized.'], 403);
+        }
+
+        EventService::delete($event);
         return Response::success(null, 204);
     }
 
@@ -60,7 +67,7 @@ class EventController extends Controller
      */
     public function getMyEvents(EventGetMyEventsRequest $request): JsonResponse
     {
-        $events = Event::where('user_id', $request->user()->id)->get();
-        return Response::success($events);
+        $events = EventService::getUserEvents($request->user());
+        return Response::success($request->user()->events);
     }
 }

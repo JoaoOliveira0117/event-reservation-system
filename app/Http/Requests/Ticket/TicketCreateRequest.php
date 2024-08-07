@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Requests\Ticket;
+use App\Enums\EventStatus;
 use App\Enums\TicketStatus;
 use App\Http\Requests\ValidatedRequest;
+use App\Http\Services\EventService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class TicketCreateRequest extends ValidatedRequest
@@ -24,6 +27,34 @@ class TicketCreateRequest extends ValidatedRequest
       'event_id' => 'required|exists:events,id',
       'status' => 'nullable|in:' . implode(",", $ticketStatus)
     ];  
+  }
+
+  public function withValidator($validator)
+  {
+    $validator->after(function ($validator) {
+      $event = EventService::getById($this->event->id);
+      
+      $today = Carbon::now();
+      $deadline = $event->deadline;
+      $eventDate = $event->date;
+
+      $eventFinished = $event->status == EventStatus::Finished;
+      $eventFull = $event->status == EventStatus::Full;
+      $pastEventDeadline = $deadline && $today->gt($deadline);
+      $pastEventDate = $today->greaterThan($eventDate);
+
+      if ($event->users->where('id', Auth::user()->getAuthIdentifier())->count()) {
+        $validator->errors()->add('user_id', 'User already registered for the event');
+      }
+
+      if ($event->users->count() >= $event->attendee_limit || $eventFull) {
+        $validator->errors()->add('event_id', 'Event is full');
+      }
+
+      if ($pastEventDeadline || $pastEventDate || $eventFinished) {
+        $validator->errors()->add('deadline', 'Event deadline has passed');
+      }
+    });
   }
 
   public function messages()
