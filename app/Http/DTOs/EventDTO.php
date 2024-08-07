@@ -24,5 +24,6 @@ class EventDTO extends BaseDTO
     $this->price = $data['price'];
     $this->attendee_limit = $data['attendee_limit'];
     $this->status = $data['status'];
+    $this->user_id = $data['user_id'];
   }
 }

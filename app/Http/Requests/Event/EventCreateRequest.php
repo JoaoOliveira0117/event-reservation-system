@@ -3,9 +3,17 @@
 namespace App\Http\Requests\Event;
 use App\Enums\EventStatus;
 use App\Http\Requests\ValidatedRequest;
+use Illuminate\Support\Facades\Auth;
 
 class EventCreateRequest extends ValidatedRequest
 {
+  public function prepareForValidation()
+  {
+    $this->merge([
+      'user_id' => Auth::user()->getAuthIdentifier(),
+    ]);
+  }
+
   public function rules(): array
   {
     $eventStatus = array_map(fn($case) => $case->value, EventStatus::cases());
@@ -24,7 +32,8 @@ class EventCreateRequest extends ValidatedRequest
         'location' => 'required|string|max:255',
         'price' => 'required|numeric|min:0',
         'attendee_limit' => 'nullable|integer|min:1',
-        'status' => 'nullable|in:' . implode(",", $eventStatus)
+        'status' => 'nullable|in:' . implode(",", $eventStatus),
+        'user_id' => 'required|exists:users,id'
     ];
   }
 }

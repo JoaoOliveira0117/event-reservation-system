@@ -13,7 +13,12 @@ abstract class BaseDTO
     return new static($request->all());
   }
 
+  public static function arrayFromRequest(Request $request): array {
+    return self::fromRequest($request)->toArray();
+  }
+
   public function toArray(): array {
     return get_object_vars($this);
   }
+
 }

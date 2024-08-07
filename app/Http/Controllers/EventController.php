@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\DTOs\EventDTO;
 use App\Http\Requests\Event\EventCreateRequest;
+use App\Http\Requests\Event\EventGetMyEventsRequest;
 use App\Http\Requests\Event\EventUpdateRequest;
 use App\Http\Responses\Response;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
@@ -32,19 +31,18 @@ class EventController extends Controller
      */
     public function store(EventCreateRequest $request): JsonResponse
     {
-        $eventDTO = EventDTO::fromRequest($request);
-        $eventDTO->user_id = $request->user()->id;
-        $event = Event::create($eventDTO->toArray());
+        $eventDTO = EventDTO::arrayFromRequest($request);
+        $event = Event::create($eventDTO);
         return Response::success($event, 201);
     }
 
     /**
      * Update a event and saves it to the database
      */
-    public function update(EventUpdateRequest $request, Event $event): JsonResponse
+    public function update(Event $event, EventUpdateRequest $request): JsonResponse
     {
-        $eventDTO = EventDTO::fromRequest($request);
-        $event->update($eventDTO->toArray());
+        $eventDTO = EventDTO::arrayFromRequest($request);
+        $event->update($eventDTO);
         return Response::success($event);
     }
     
@@ -57,9 +55,12 @@ class EventController extends Controller
         return Response::success(null, 204);
     }
 
-    public function getMyEvents(): JsonResponse
+    /**
+     * Returns all events created by the authenticated user
+     */
+    public function getMyEvents(EventGetMyEventsRequest $request): JsonResponse
     {
-        $events = Event::where('user_id', request()->user()->id)->get();
+        $events = Event::where('user_id', $request->user()->id)->get();
         return Response::success($events);
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\EventStatus;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,7 +28,8 @@ class EventFactory extends Factory
             'location' => $this->faker->address(),
             'price' => $this->faker->randomFloat(2,0,99),
             'attendee_limit' => $this->faker->randomNumber(2),
-            'status' => $this->faker->randomElement(array_map(fn($case) => $case->value, EventStatus::cases()))
+            'status' => $this->faker->randomElement(array_map(fn($case) => $case->value, EventStatus::cases())),
+            'user_id' => User::factory()
         ];
     }
 }

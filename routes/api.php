@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,11 +21,17 @@ Route::post("/register", [AuthController::class, "register"]);
 Route::middleware('auth:sanctum')->group(function () {
 
   // Users
-  Route::resource("users", UserController::class);
+  Route::resource("users", UserController::class)->except(['create']);
 
   // Events
-  Route::get('events/me', [EventController::class, "getMyEvents"]);
-  Route::resource("events", EventController::class);
+  Route::get('/events/me', [EventController::class, "getMyEvents"]);
+  Route::resource("events", EventController::class)->except(['create']);
+
+  // Tickets
+  Route::post("/tickets/{event}", [TicketController::class, "store"]);
+  Route::put("/tickets/{event}", [TicketController::class, "update"]);
+  Route::delete("/tickets/{event}", [TicketController::class, "destroy"]);
+  Route::resource("tickets", TicketController::class)->except(['create', 'store', 'update', 'destroy']);
 });
 
 
