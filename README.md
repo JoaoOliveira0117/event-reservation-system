@@ -19,6 +19,8 @@ This application's purpose is to deliver information about user registered event
 
 ### Endpoints available
 
+## Before starting the application, make sure you have the database docker container built and running.
+
 ```python
 {{URL}} /api/register
 
