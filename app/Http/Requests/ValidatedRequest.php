@@ -10,6 +10,6 @@ class ValidatedRequest extends FormRequest
 {
   public function failedValidation(Validator $validator)
   {
-    throw new HttpResponseException(Response::error($validator->errors(), 400));
+    throw new HttpResponseException(Response::error($validator->errors(), 422));
   }
 }

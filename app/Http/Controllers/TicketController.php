@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\DTOs\TicketDTO;
 use App\Http\Requests\Ticket\TicketCreateRequest;
 use App\Http\Requests\Ticket\TicketDeleteRequest;
+use App\Http\Requests\Ticket\TicketGetRequest;
 use App\Http\Requests\Ticket\TicketUpdateRequest;
 use App\Http\Responses\Response;
 use App\Http\Services\TicketService;
 use App\Models\Event;
-use App\Models\Ticket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 
@@ -27,8 +27,10 @@ class TicketController extends Controller
     /**
      * Returns a single ticket
      */
-    public function show(Ticket $ticket): JsonResponse
+    public function show(TicketGetRequest $request): JsonResponse
     {
+        $ticketDTO = TicketDTO::arrayFromRequest($request);
+        $ticket = TicketService::getTicket($ticketDTO);
         return Response::success($ticket);
     }
 
@@ -47,12 +49,9 @@ class TicketController extends Controller
     public function update(TicketUpdateRequest $request): JsonResponse
     {
         $ticketDTO = TicketDTO::arrayFromRequest($request);
+        $ticket = TicketService::getTicket($ticketDTO);
         
-        $ticket = Ticket::where('user_id', $ticketDTO['user_id'])
-            ->where('event_id', $ticketDTO['event_id'])
-            ->firstOrFail();
-        
-        if (!Gate::allows('manage-event', $ticket)) {
+        if (!Gate::allows('manage-ticket', $ticket)) {
             return Response::error((object) ['error' => 'Unauthorized.'], 403);
         }
             
@@ -66,17 +65,13 @@ class TicketController extends Controller
     public function destroy(Event $event, TicketDeleteRequest $request): JsonResponse
     {
         $ticketDTO = TicketDTO::arrayFromRequest($request);
+        $ticket = TicketService::getTicket($ticketDTO);
 
-        $ticket = Ticket::where('user_id', $ticketDTO['user_id'])
-            ->where('event_id', $event->id)
-            ->firstOrFail();
-        
-
-        if (!Gate::allows('manage-event', $ticket)) {
+        if (!Gate::allows('manage-ticket', $ticket)) {
             return Response::error((object) ['error' => 'Unauthorized.'], 403);
         }
 
         $ticket->delete();
-        return Response::success((object) [], 204);
+        return Response::success((object) null, 204);
     }
 }

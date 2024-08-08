@@ -60,7 +60,7 @@ class EventController extends Controller
         }
 
         EventService::delete($event);
-        return Response::success(null, 204);
+        return Response::success((object) null, 204);
     }
 
     /**

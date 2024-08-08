@@ -28,10 +28,11 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::resource("events", EventController::class)->except(['create']);
 
   // Tickets
+  Route::get('/tickets', [TicketController::class, 'index']);
+  Route::get('/tickets/{event}', [TicketController::class, 'show']);
   Route::post("/tickets/{event}", [TicketController::class, "store"]);
   Route::put("/tickets/{event}", [TicketController::class, "update"]);
   Route::delete("/tickets/{event}", [TicketController::class, "destroy"]);
-  Route::resource("tickets", TicketController::class)->except(['create', 'store', 'update', 'destroy']);
 });
 
 

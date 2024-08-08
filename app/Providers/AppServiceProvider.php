@@ -33,7 +33,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('manage-ticket', function(User $currentUser, Ticket $targetTicket) {
-            dd($currentUser, $targetTicket->user);
             return $currentUser->id === $targetTicket->user->id;
         });
 

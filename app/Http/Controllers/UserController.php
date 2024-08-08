@@ -57,6 +57,9 @@ class UserController extends Controller
      */
     public function destroy(User $user): JsonResponse
     {
+        if (!Gate::allows('manage-user', $user)) {
+            return Response::error((object) ['error' => 'Unauthorized.'], 403);
+        }
 
         UserService::delete($user);
         return Response::success((object) null, 204);

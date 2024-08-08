@@ -38,8 +38,8 @@ class TicketCreateRequest extends ValidatedRequest
       $deadline = $event->deadline;
       $eventDate = $event->date;
 
-      $eventFinished = $event->status == EventStatus::Finished;
-      $eventFull = $event->status == EventStatus::Full;
+      $eventFinished = $event->status == EventStatus::Finished->value;
+      $eventFull = $event->status == EventStatus::Full->value;
       $pastEventDeadline = $deadline && $today->gt($deadline);
       $pastEventDate = $today->greaterThan($eventDate);
 

@@ -32,7 +32,7 @@ class EventUpdateRequest extends ValidatedRequest
         'location' => 'string|max:255',
         'price' => 'numeric|min:0',
         'attendee_limit' => 'nullable|integer|min:1',
-        'status' => 'nullable|in:' . join($eventStatus, ','),
+        'status' => 'nullable|in:' . implode(",", $eventStatus),
         'user_id' => 'required|exists:users,id'
     ];
   }

@@ -8,4 +8,8 @@ use App\Models\Ticket;
 class TicketService extends Service {
   protected static string $model = Ticket::class;
   protected static string $DTO = TicketDTO::class;
+
+  public static function getTicket(array $data) {
+    return self::$model::query()->findOne($data)->firstOrFail();
+  }
 }
