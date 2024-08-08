@@ -68,7 +68,6 @@ class EventController extends Controller
      */
     public function getMyEvents(EventGetMyEventsRequest $request): JsonResponse
     {
-        $events = EventService::getUserEvents($request->user());
         return Response::success($request->user()->events);
     }
 }
