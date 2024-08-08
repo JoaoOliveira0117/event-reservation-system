@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Services;
-use App\Http\DTOs\BaseDTO;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 

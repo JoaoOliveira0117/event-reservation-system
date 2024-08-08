@@ -43,11 +43,11 @@ class TicketCreateRequest extends ValidatedRequest
       $pastEventDeadline = $deadline && $today->gt($deadline);
       $pastEventDate = $today->greaterThan($eventDate);
 
-      if ($event->users->where('id', Auth::user()->getAuthIdentifier())->count()) {
+      if ($event->tickets->where('id', Auth::user()->getAuthIdentifier())->count()) {
         $validator->errors()->add('user_id', 'User already registered for the event');
       }
 
-      if ($event->users->count() >= $event->attendee_limit || $eventFull) {
+      if ($event->tickets->count() >= $event->attendee_limit || $eventFull) {
         $validator->errors()->add('event_id', 'Event is full');
       }
 

@@ -26,7 +26,8 @@ class UserController extends Controller
      */
     public function show(User $user): JsonResponse
     {
-        return Response::success($user);
+        $result = UserService::getUser($user->id);
+        return Response::success($result);
     }
 
     /**

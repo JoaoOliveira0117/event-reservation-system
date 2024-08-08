@@ -15,7 +15,7 @@ class EventController extends Controller
 {
     public function index(): JsonResponse
     {
-        $events = EventService::getAll();
+        $events = EventService::getAllEvents();
         return Response::success($events);
     }
 
@@ -24,7 +24,8 @@ class EventController extends Controller
      */
     public function show(Event $event): JsonResponse
     {
-        return Response::success($event);
+        $result = EventService::getEvent($event->id);
+        return Response::success($result);
     }
 
     /**

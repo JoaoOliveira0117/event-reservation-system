@@ -16,4 +16,19 @@ class EventService extends Service {
   public static function getEventTickets($event) {
     return $event->tickets;
   }
+
+  public static function getAllEvents() {
+    return self::$model::query()
+      ->withUser()
+      ->withBoughtTicketsCount()
+      ->get();
+  }
+
+  public static function getEvent(string $eventId) {
+    return self::$model::query()
+      ->forEvent($eventId)
+      ->withUser()
+      ->withBoughtTicketsCount()
+      ->firstOrFail();
+  }
 }

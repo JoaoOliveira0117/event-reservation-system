@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Builders\EventBuilder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,18 +25,25 @@ class Event extends Model
         "user_id"
     ];
 
+    protected $hidden = ['user_id', 'pivot'];
+
     protected $casts = [
         "price" => "float",
         "deadline" => "datetime",
         "date" => "datetime"
     ];
 
+    public function newEloquentBuilder($query): EventBuilder
+    {
+        return new EventBuilder($query);
+    }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function users(): BelongsToMany
+    public function tickets(): BelongsToMany
     {
         return $this->belongsToMany(User::class, Ticket::class);
     }
