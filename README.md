@@ -4,17 +4,17 @@ This application's purpose is to deliver information about user registered event
 
 ### Goals
 
-- [ ] **Authentication**: Enable user registration and login.
-- [ ] **Event Creation**: Allow users to create events with details like title, description, date/time, location, price, and attendee limit.
-- [ ] **Ticket Reservation**: Users can reserve tickets within attendee limits and deadlines.
+- [x] **Authentication**: Enable user registration and login.
+- [x] **Event Creation**: Allow users to create events with details like title, description, date/time, location, price, and attendee limit.
+- [x] **Ticket Reservation**: Users can reserve tickets within attendee limits and deadlines.
 - [ ] **Events Page**: Display all available events with relevant information.
-- [ ] **Database Migration**: Create necessary tables, use seeders, and factories.
-- [ ] **Controllers**: Handle requests and responses in Laravel.
-- [ ] **Eloquent Handling**: Interact with the database.
-- [ ] **Model Relationships**: Establish relationships between models.
-- [ ] **Validation**: Ensure data entered is valid and secure.
+- [x] **Database Migration**: Create necessary tables, use seeders, and factories.
+- [x] **Controllers**: Handle requests and responses in Laravel.
+- [x] **Eloquent Handling**: Interact with the database.
+- [x] **Model Relationships**: Establish relationships between models.
+- [x] **Validation**: Ensure data entered is valid and secure.
 - [ ] **Sessions & Sanctum**: Maintain application state and use Laravel Sanctum.
-- [ ] **Middleware**: Protect routes and controllers requiring authentication.
+- [x] **Middleware**: Protect routes and controllers requiring authentication.
 
 <h6 align="center">Application supported by</h6>
 
