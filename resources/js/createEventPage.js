@@ -21,7 +21,7 @@ const setErrors = ({ title = 'Error!!', description = '', deadline = '', date = 
 
 const onSuccess = () => {
   alert('Event created successfully');
-  window.location.href = 'events'
+  window.location.href = '/events'
 }
 
 const onError = (err) => {

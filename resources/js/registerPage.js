@@ -33,7 +33,7 @@ document.getElementById('register-form').addEventListener('submit', async e => {
 
   setErrors({});
 
-  axios.post('api/register', {
+  axios.post('/api/register', {
     email,
     username,
     password,

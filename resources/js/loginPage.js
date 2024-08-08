@@ -14,7 +14,7 @@ const onSuccess = (res) => {
   const { data } = res.data;
   localStorage.setItem('access_token', data.access_token);
   localStorage.setItem('userId', data.user.id);
-  window.location.href = 'events';
+  window.location.href = '/events';
 }
 
 const onError = (err) => {
@@ -31,7 +31,7 @@ document.getElementById('login-form').addEventListener('submit', async e => {
 
   setErrors({})
 
-  axios.post('api/login', {
+  axios.post('/api/login', {
     email,
     password,
   }).then(onSuccess).catch(onError)

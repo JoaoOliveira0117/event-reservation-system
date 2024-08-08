@@ -46,7 +46,7 @@ const onError = (err) => {
 }
 
 const getTickets = () => {
-  axios.get('api/tickets/me', {
+  axios.get('/api/tickets/me', {
     headers: {
       Authorization: getAuthHeader()
     }

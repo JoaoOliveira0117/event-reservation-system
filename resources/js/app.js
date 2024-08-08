@@ -13,7 +13,7 @@ const onError = (err) => {
 }
 
 window.buyTicket = (eventId) => {
-  axios.post('api/tickets/' + eventId, {
+  axios.post('/api/tickets/' + eventId, {
     status: 'ticket_valid'
   }, {
     headers: {
@@ -23,7 +23,7 @@ window.buyTicket = (eventId) => {
 }
 
 window.deleteTicket = (eventId) => {
-  axios.delete('api/tickets/' + eventId, {
+  axios.delete('/api/tickets/' + eventId, {
     headers: {
       Authorization: getAuthHeader()
     }
@@ -31,7 +31,7 @@ window.deleteTicket = (eventId) => {
 }
 
 window.deleteEvent = (eventId) => {
-  axios.delete('api/events/' + eventId, {
+  axios.delete('/api/events/' + eventId, {
     headers: {
       Authorization: getAuthHeader()
     }
@@ -39,5 +39,5 @@ window.deleteEvent = (eventId) => {
 }
 
 window.updateEvent = (eventId) => {
-  window.location.href = 'events/' + eventId;
+  window.location.href = '/events/' + eventId;
 }
