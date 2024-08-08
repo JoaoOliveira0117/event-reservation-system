@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\UserCreateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Responses\Response;
 use App\Http\Services\UserService;
@@ -31,15 +30,6 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a user and saves it to the database
-     */
-    public function store(UserCreateRequest $request): JsonResponse
-    {   
-        $user = UserService::create($request);
-        return Response::success($user, 201);
-    }
-
-    /**
      * Update a user and saves it to the database
      */
     public function update(UserUpdateRequest $request, User $user): JsonResponse
@@ -61,6 +51,7 @@ class UserController extends Controller
             return Response::error((object) ['error' => 'Unauthorized.'], 403);
         }
 
+        $user->tokens()->delete();
         UserService::delete($user);
         return Response::success((object) null, 204);
     }

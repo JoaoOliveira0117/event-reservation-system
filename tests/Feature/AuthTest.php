@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -125,5 +125,13 @@ class AuthTest extends TestCase
                 ],
                 'success',
             ]);
+    }
+
+    public function test_user_can_logout(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->json('post', 'api/logout')
+            ->assertStatus(Response::HTTP_NO_CONTENT);
     }
 }
