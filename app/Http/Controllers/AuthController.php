@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\DTOs\AuthDTO;
 use App\Http\DTOs\UserDTO;
 use App\Http\Requests\Auth\AuthLoginRequest;
+use App\Http\Requests\Auth\AuthLogoutRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Http\Responses\Response;
 use App\Models\User;

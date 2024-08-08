@@ -12,4 +12,8 @@ class TicketService extends Service {
   public static function getTicket(array $data) {
     return self::$model::query()->findOne($data)->firstOrFail();
   }
+
+  public static function getMyTickets(array $data) {
+    return self::$model::query()->forUser($data['user_id'])->withEvent()->get();
+  }
 }

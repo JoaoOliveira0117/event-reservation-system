@@ -168,6 +168,14 @@ curl --request GET \
 ```
 
 ```python
+@get - Get a list of all tickets aquired by you
+curl --request GET \
+  --url http://localhost:8000/api/tickets/me \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer YOUR USER TOKEN HERE' \
+```
+
+```python
 {{URL}} /api/tickets/{event}
 
 @get - Get the ticket of the specified event of your user

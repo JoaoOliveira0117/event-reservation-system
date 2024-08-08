@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\DTOs\TicketDTO;
 use App\Http\Requests\Ticket\TicketCreateRequest;
 use App\Http\Requests\Ticket\TicketDeleteRequest;
+use App\Http\Requests\Ticket\TicketGetMyRequest;
 use App\Http\Requests\Ticket\TicketGetRequest;
 use App\Http\Requests\Ticket\TicketUpdateRequest;
 use App\Http\Responses\Response;
@@ -73,5 +74,11 @@ class TicketController extends Controller
 
         $ticket->delete();
         return Response::success((object) null, 204);
+    }
+
+    public function getMyTickets(TicketGetMyRequest $request): JsonResponse
+    {
+        $tickets = TicketService::getMyTickets([ 'user_id' => auth()->user()->id ]);
+        return Response::success($tickets);
     }
 }

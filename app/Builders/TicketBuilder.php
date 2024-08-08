@@ -24,4 +24,8 @@ class TicketBuilder extends Builder
     return $this->forUser($data['user_id'])
       ->forEvent($data['event_id']);
   }
+
+  public function withEvent() {
+    return $this->with('event');
+  }
 }

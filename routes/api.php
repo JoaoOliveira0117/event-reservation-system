@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Route;
  // Auth
 Route::post("/login", [AuthController::class, "login"]);
 Route::post("/register", [AuthController::class, "register"]);
-Route::post("/logout", [AuthController::class, "logout"]);
 
  // Protected
 Route::middleware('auth:sanctum')->group(function () {
+  Route::post("/logout", [AuthController::class, "logout"]);
 
   // Users
   Route::resource("users", UserController::class)->except(['create', 'store', 'edit']);
@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
   // Tickets
   Route::get('/tickets', [TicketController::class, 'index']);
+  Route::get('/tickets/me', [TicketController::class, 'getMyTickets']);
   Route::get('/tickets/{event}', [TicketController::class, 'show']);
   Route::post("/tickets/{event}", [TicketController::class, "store"]);
   Route::put("/tickets/{event}", [TicketController::class, "update"]);
