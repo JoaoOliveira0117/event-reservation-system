@@ -13,7 +13,7 @@
             <h2>My Tickets</h2>
         </div>
 
-        <div class="ticket-container" id="events-container">
+        <div class="ticket-container" id="tickets-container">
 
         </div>
     </div>

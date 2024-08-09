@@ -1,29 +1,9 @@
 import './app.js';
 import { getAuthHeader } from './app.js';
+import { ticketsHtmlBuilder } from './htmlBuilder.js';
 
-const ticketStatus = {
-  ticket_valid: 'Valid',
-  ticket_expired: 'Due',
-}
+const buildTicketsHtml = (tickets) => tickets.map(ticket => ticketsHtmlBuilder(ticket)).join('');
 
-const buildTicketsHtml = (tickets) => {
-  console.log(tickets)
-  return tickets.map(ticket => {
-    return `
-      <div class="ticket">
-        <h3>${ticket.event.title}</h2>
-        <p>${ticket.event.description}</p>
-        <span>Date: ${ticket.event.date}</span>
-        <span>Location: ${ticket.event.location}</span>
-        <span>Price: ${ticket.event.price}</span>
-        <span>Ticket Status: ${ticketStatus[ticket.status]}</span>
-        <div class="button-wrapper">
-          <button class="btn btn-delete" onclick="deleteTicket('${ticket.event_id}')">Delete Ticket</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
 const buildErrorHtml = (error) => {
   return `
     <div class='ticket'>
@@ -35,13 +15,14 @@ const buildErrorHtml = (error) => {
 
 const onSuccess = (res) => {
   const { data } = res.data
-  const eventsContainer = document.getElementById('events-container');
+  const eventsContainer = document.getElementById('tickets-container');
   eventsContainer.innerHTML = buildTicketsHtml(data);
 }
 
 const onError = (err) => {
+  console.log(err)
   const { data } = err.response.data;
-  const eventsContainer = document.getElementById('events-container');
+  const eventsContainer = document.getElementById('tickets-container');
   eventsContainer.innerHTML = buildErrorHtml(data.error);
 }
 

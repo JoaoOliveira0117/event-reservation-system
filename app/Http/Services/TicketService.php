@@ -14,6 +14,10 @@ class TicketService extends Service {
   }
 
   public static function getMyTickets(array $data) {
-    return self::$model::query()->forUser($data['user_id'])->withEvent()->get();
+    return self::$model::query()
+      ->forUser($data['user_id'])
+      ->withEvent()
+      ->sortByCreatedAt()
+      ->get();
   }
 }

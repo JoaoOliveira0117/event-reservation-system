@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\EventStatus;
 use App\Enums\TicketStatus;
 use App\Models\Event;
 use App\Models\User;
@@ -21,7 +22,9 @@ class TicketFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'event_id' => Event::factory(),
+            'event_id' => Event::factory([
+                'status' => EventStatus::Pending->value
+            ]),
             'status' => $this->faker->randomElement(array_map(fn($case) => $case->value, TicketStatus::cases()))
         ];
     }

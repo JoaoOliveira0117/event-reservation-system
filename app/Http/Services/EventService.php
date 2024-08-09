@@ -13,6 +13,7 @@ class EventService extends Service {
     return self::$model::query()
       ->withUser()
       ->withBoughtTicketsCount()
+      ->sortByCreatedAt()
       ->get();
   }
 

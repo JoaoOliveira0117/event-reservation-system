@@ -15,8 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $mainUser = User::factory()->create([
+            'email' => 'aurora@email.com',
+            'password' => '_@@aurora2024'
+        ]);
+
         User::factory(2)->create();
         Event::factory(3)->create();
-        Ticket::factory(3)->create();
+        Ticket::factory(3)->create([
+            'user_id' => $mainUser->id
+        ]);
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('events', function (Blueprint $table) {
             $table
                 ->foreignUuid('user_id')
-                ->constrained(table: 'users', indexName: 'events_user_id')
+                ->constrained(table: 'users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
         });
@@ -27,7 +27,6 @@ return new class extends Migration
     {
         Schema::table('events', function (Blueprint $table) {
             if(DB::getDriverName() !=='sqlite') {
-                $table->dropIndex('events_user_id');
                 $table->dropColumn('user_id');
             }
         });

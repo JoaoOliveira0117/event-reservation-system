@@ -28,4 +28,9 @@ class TicketBuilder extends Builder
   public function withEvent() {
     return $this->with('event');
   }
+
+  public function sortByCreatedAt()
+  {
+    return $this->orderBy('created_at','desc');
+  }
 }

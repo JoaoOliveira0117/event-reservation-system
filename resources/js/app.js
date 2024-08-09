@@ -4,6 +4,18 @@ export const getAuthHeader = () => {
   return `Bearer ${localStorage.getItem('access_token')}`;
 }
 
+export const formatDateString = (date) => {
+  const options = { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric', 
+    hour: 'numeric', 
+    minute: 'numeric' 
+  };
+  
+  return new Date(date).toLocaleDateString('en-US', options);
+}
+
 const onError = (err) => {
   if (err.response.data.message) {
     return alert(err.response.data.message);
