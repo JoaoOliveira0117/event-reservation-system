@@ -22,7 +22,7 @@ This application's purpose is to deliver information about user registered event
 ## Project PHP version: 8.2
 ## Laravel version: 11
 
-## Before starting the application, make sure you have the database docker container built and running.
+## Before starting the application, make sure you have run composer and have the database docker container built and running.
 
 ```
 docker-compose up --build
@@ -38,6 +38,9 @@ php artisan test
 
 ### Endpoints available
 
+You can use the default user created for testing purposes:
+Email: aurora@email.com
+Password: _@@aurora2024
 
 ```python
 {{URL}} /api/register
