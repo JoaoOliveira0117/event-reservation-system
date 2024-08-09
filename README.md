@@ -38,6 +38,8 @@ php artisan test
 
 ### Endpoints available
 
+## You can access the web application by accessing your localhost url ( 127.0.0.1 or localhost )
+
 You can use the default user created for testing purposes:
 Email: aurora@email.com
 Password: _@@aurora2024
