@@ -1,7 +1,7 @@
 import './app.js';
 import { getAuthHeader } from './app.js';
 
-const setErrors = ({ title = 'Error!!', description = '', deadline = '', date = '', location = '', price = '', attendee_limit = '' }) => {
+const setErrors = ({ title = '', description = '', deadline = '', date = '', location = '', price = '', attendee_limit = '' }) => {
   const titleError = document.getElementById('title-error');
   const descriptionError = document.getElementById('description-error');
   const deadlineError = document.getElementById('deadline-error');
