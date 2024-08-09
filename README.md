@@ -17,9 +17,27 @@ This application's purpose is to deliver information about user registered event
 - [x] **Middleware**: Protect routes and controllers requiring authentication.
 - [x] **Testing**: Create and configure feature tests.
 
-### Endpoints available
+## Setup
+
+## Project PHP version: 8.2
+## Laravel version: 11
 
 ## Before starting the application, make sure you have the database docker container built and running.
+
+```
+docker-compose up --build
+# After building the container, run migrations and seeds
+php artisan migrate
+php artisan db:seed
+```
+
+You can also run tests with the following commands:
+```
+php artisan test
+```
+
+### Endpoints available
+
 
 ```python
 {{URL}} /api/register
