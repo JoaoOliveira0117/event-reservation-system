@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Builders\UserBuilder;
 use App\Http\DTOs\UserDTO;
 use App\Models\User;
 
